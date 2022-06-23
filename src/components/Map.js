@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MapView, { Circle } from "react-native-maps";
 import * as Location from "expo-location";
 import {
@@ -9,10 +9,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Context } from "../state/Context";
 
-export default function App() {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+export default function Map() {
+  const { region, setRegion } = React.useContext(Context);
 
   useEffect(() => {
     (async () => {
@@ -21,39 +21,27 @@ export default function App() {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      console.log(location);
     })();
   }, []);
 
   return (
     <View style={styles.container}>
       <MapView
+        region={region}
+        onRegionChangeComplete={setRegion}
         style={styles.map}
-        region={
-          location &&
-          location.coords && {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }
-        }
       >
-        <Circle
-          center={
-            location &&
-            location.coords && {
+        {/* {location && location.coords && (
+          <Circle
+            center={{
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
-            }
-          }
-          radius={100}
-          fillColor="rgba(255,0,0,0.3)"
-          strokeColor="rgba(255,0,0,0.9)"
-        />
+            }}
+            radius={location.coords.accuracy}
+            fillColor="rgba(0,5,62,0.3)"
+            strokeColor="rgba(0,5,62,0.3)"
+          />
+        )} */}
       </MapView>
       <TouchableOpacity
         style={{
@@ -71,7 +59,12 @@ export default function App() {
         }}
         onPress={async () => {
           let location = await Location.getLastKnownPositionAsync();
-          setLocation(location);
+          setRegion({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          });
         }}
       >
         <MaterialCommunityIcons name="crosshairs-gps" size={24} color="black" />
