@@ -1,29 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import MapView, { Circle, Marker } from "react-native-maps";
-import * as Location from "expo-location";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Context as RegionContext } from "../state/RegionContext";
-import LocationMarker from "./LocationMarker";
+import React from "react";
+import { StyleSheet, View, Dimensions, TouchableOpacity } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Context as RegionContext } from "../../state/RegionContext";
+import { Context as LocationContext } from "../../state/LocationContext";
 
 export default function Map() {
-  const { region, setRegion } = React.useContext(RegionContext);
+  const { location } = React.useContext(RegionContext);
+  const { region } = React.useContext(LocationContext);
 
   return (
     <View style={styles.container}>
-      <MapView
-        region={region}
-        onRegionChangeComplete={setRegion}
-        style={styles.map}
-      >
-        <LocationMarker />
-      </MapView>
       <TouchableOpacity
         style={{
           position: "absolute",
@@ -38,8 +24,7 @@ export default function Map() {
           borderColor: "rgba(0, 0, 0, 0.5)",
           borderWidth: 1,
         }}
-        onPress={async () => {
-          let location = await Location.getLastKnownPositionAsync();
+        onPress={() => {
           if (location) {
             setRegion({
               latitude: location.coords.latitude,
@@ -50,7 +35,7 @@ export default function Map() {
           }
         }}
       >
-        <MaterialCommunityIcons name="crosshairs-gps" size={24} color="black" />
+        <MaterialIcons name="my-location" size={24} color="black" />
       </TouchableOpacity>
     </View>
   );
