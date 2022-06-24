@@ -11,11 +11,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Context as RegionContext } from "../../state/RegionContext";
 import { Context as LocationContext } from "../../state/LocationContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { COLORS } from "../../constants";
 
 const ActionButton = ({ icon, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.actionButton}>
-      <MaterialIcons name={icon} size={35} color="black" />
+      <MaterialIcons name={icon} size={35} color={COLORS.zetifiObsidian} />
     </TouchableOpacity>
   );
 };
