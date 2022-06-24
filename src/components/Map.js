@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import MapView, { Circle } from "react-native-maps";
+import MapView, { Circle, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import {
   StyleSheet,
@@ -9,20 +9,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Context } from "../state/Context";
+import { Context as RegionContext } from "../state/RegionContext";
+import LocationMarker from "./LocationMarker";
 
 export default function Map() {
-  const { region, setRegion } = React.useContext(Context);
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-    })();
-  }, []);
+  const { region, setRegion } = React.useContext(RegionContext);
 
   return (
     <View style={styles.container}>
@@ -31,17 +22,7 @@ export default function Map() {
         onRegionChangeComplete={setRegion}
         style={styles.map}
       >
-        {/* {location && location.coords && (
-          <Circle
-            center={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }}
-            radius={location.coords.accuracy}
-            fillColor="rgba(0,5,62,0.3)"
-            strokeColor="rgba(0,5,62,0.3)"
-          />
-        )} */}
+        <LocationMarker />
       </MapView>
       <TouchableOpacity
         style={{
@@ -59,12 +40,14 @@ export default function Map() {
         }}
         onPress={async () => {
           let location = await Location.getLastKnownPositionAsync();
-          setRegion({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          });
+          if (location) {
+            setRegion({
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+              latitudeDelta: region.latitudeDelta,
+              longitudeDelta: region.longitudeDelta,
+            });
+          }
         }}
       >
         <MaterialCommunityIcons name="crosshairs-gps" size={24} color="black" />

@@ -1,10 +1,15 @@
-import { Provider } from "./state/Context";
+import { Provider as RegionProvider } from "./state/RegionContext";
+import { Provider as LocationProvider } from "./state/LocationContext";
 import Map from "./components/Map";
+import WatchLocation from "./watchers/watchLocation";
 
 export default function App() {
   return (
-    <Provider>
-      <Map />
-    </Provider>
+    <RegionProvider>
+      <LocationProvider>
+        <Map />
+        <WatchLocation />
+      </LocationProvider>
+    </RegionProvider>
   );
 }
