@@ -14,6 +14,7 @@ export default () => {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
           }}
+          anchor={{ x: 0.5, y: 0.5 }}
         >
           <MaterialIcons name="my-location" size={20} color="rgba(0,0,0,0.8)" />
         </Marker>
@@ -23,7 +24,7 @@ export default () => {
             longitude: location.coords.longitude,
           }}
           radius={location.coords.accuracy}
-          strokeColor="rgba(0,0,0,0.5)"
+          strokeWidth={0}
           fillColor="rgba(0,0,0,0.3)"
         />
       </>
