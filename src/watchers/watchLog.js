@@ -1,16 +1,24 @@
 import React, { useEffect } from "react";
-import { Context as LocationContext } from "../state/LocationContext";
-import useLocation from "../hooks/useLocation";
+import { Context as LogContext } from "../state/LogContext";
+import usePing from "../hooks/usePing";
 
 export default () => {
-  const { location, errorMsg } = useLocation();
-  const { setLocation } = React.useContext(LocationContext);
+  const { isRecording } = React.useContext(LogContext);
+  let ping = null;
+
+  console.log(ping);
 
   useEffect(() => {
-    if (location) {
-      setLocation(location);
+    if (isRecording) {
+      ping = usePing();
     }
-  }, [location]);
+  }, [isRecording]);
+
+  useEffect(() => {
+    if (isRecording) {
+      console.log("ping", ping);
+    }
+  }, [ping, isRecording]);
 
   return null;
 };
