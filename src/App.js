@@ -1,32 +1,61 @@
-import { Provider as RegionProvider } from "./state/RegionContext";
-import { Provider as LocationProvider } from "./state/LocationContext";
+import Providers from "./Providers";
 import Map, { ActionBar } from "./components/map";
 import WatchLocation from "./watchers/watchLocation";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialIcons } from "@expo/vector-icons";
+import { COLORS } from "./constants";
 
-const Tab = createBottomTabNavigator();
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
-const MapScreen = () => {
-  return (
-    <>
-      <Map />
-      <ActionBar />
-      <WatchLocation />
-    </>
-  );
-};
+import { NavigationContainer } from "@react-navigation/native";
+
+import MapScreen from "./screens/MapScreen";
+import LogScreen from "./screens/LogScreen";
+import SettingsScreen from "./screens/SettingsScreen";
+
+const Tab = createMaterialBottomTabNavigator();
+
+const optionFactory = (icon, label) => ({
+  tabBarIcon: ({ color }) => (
+    <MaterialIcons name={icon} size={25} color={color} />
+  ),
+  tabBarLabel: label,
+  tabBarStyle: {
+    display: "none",
+  },
+});
 
 export default function App() {
   return (
-    <RegionProvider>
-      <LocationProvider>
-        <SafeAreaProvider>
-          <Map />
-          <ActionBar />
-          <WatchLocation />
-        </SafeAreaProvider>
-      </LocationProvider>
-    </RegionProvider>
+    <Providers>
+      <WatchLocation />
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            shifting={true}
+            barStyle={{ backgroundColor: COLORS.zetifiObsidian }}
+          >
+            <Tab.Screen
+              name="Map"
+              component={MapScreen}
+              options={optionFactory("map", "Map")}
+            />
+            <Tab.Screen
+              name="Logs"
+              component={LogScreen}
+              options={optionFactory("list", "Logs")}
+            />
+            <Tab.Screen
+              name="Settings"
+              component={SettingsScreen}
+              options={optionFactory("settings", "Settings")}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </Providers>
   );
 }

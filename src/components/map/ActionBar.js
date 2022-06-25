@@ -10,26 +10,37 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { Context as RegionContext } from "../../state/RegionContext";
 import { Context as LocationContext } from "../../state/LocationContext";
+import { Context as LogContext } from "../../state/LogContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { COLORS } from "../../constants";
+import { COLORS, ICON_SIZE } from "../../constants";
 
-const ActionButton = ({ icon, onPress }) => {
+const ActionButton = ({ icon, color, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.actionButton}>
-      <MaterialIcons name={icon} size={35} color={COLORS.zetifiObsidian} />
+      <MaterialIcons
+        name={icon}
+        size={ICON_SIZE}
+        color={color ? color : "white"}
+      />
     </TouchableOpacity>
   );
 };
 
 export default () => {
-  const insets = useSafeAreaInsets();
-  const { region, setRegion, setAnimateToRegion } =
-    React.useContext(RegionContext);
+  const { region, setAnimateToRegion } = React.useContext(RegionContext);
   const { location } = React.useContext(LocationContext);
+  const { isRecording, setIsRecording } = React.useContext(LogContext);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ ...styles.actionBar, marginTop: insets.top + 50 }}>
+      <View style={{ ...styles.actionBar }}>
+        <ActionButton
+          icon={isRecording ? "stop" : "fiber-manual-record"}
+          color={COLORS.errorRed}
+          onPress={() => {
+            setIsRecording(!isRecording);
+          }}
+        ></ActionButton>
         <ActionButton
           icon="my-location"
           onPress={() => {
@@ -51,13 +62,15 @@ export default () => {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
+    bottom: 10,
+    right: 0,
   },
   actionBar: {
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
+    backgroundColor: COLORS.zetifiObsidian,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
