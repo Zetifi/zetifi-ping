@@ -2,23 +2,20 @@ import React, { useEffect, useState, useContext } from "react";
 import usePing from "../hooks/usePing";
 import { Context as LogContext } from "../state/LogContext";
 import { Context as LocationContext } from "../state/LocationContext";
+import { flatten } from "flat";
 
 export default () => {
-  const { isRecording } = useContext(LogContext);
+  const { isRecording, addLog } = useContext(LogContext);
   const { location } = useContext(LocationContext);
   const ping = usePing({ enabled: isRecording });
 
   const [log, setLog] = useState([]);
 
-  let saveLog = () => {};
-
   useEffect(() => {
     if (isRecording && log.length === 0) {
-      console.log("recording started");
-    } else if (!isRecording && log.length > 0) {
-      console.log("recording stopped");
-      console.log(log);
       setLog([]);
+    } else if (!isRecording && log.length > 0) {
+      addLog(log.map(flatten));
     }
   }, [isRecording]);
 

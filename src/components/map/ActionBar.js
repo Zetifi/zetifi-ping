@@ -46,8 +46,8 @@ export default () => {
           onPress={() => {
             if (location) {
               setAnimateToRegion({
-                latitude: location.location.latitude,
-                longitude: location.location.longitude,
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
                 latitudeDelta: region.latitudeDelta,
                 longitudeDelta: region.longitudeDelta,
               });

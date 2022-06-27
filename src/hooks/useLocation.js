@@ -26,7 +26,7 @@ export default (options) => {
 
       setLocation({
         datetime: new Date().toISOString(),
-        location: location ? location.coords : null,
+        coords: location ? location.coords : null,
         errorMsg: errorMsg,
       });
 
