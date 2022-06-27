@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
-import { Context as LogContext } from "../state/LogContext";
 import usePing from "../hooks/usePing";
+import { Context as LogContext } from "../state/LogContext";
 
 export default () => {
   const { isRecording } = React.useContext(LogContext);
-  let ping = null;
-
-  console.log(ping);
+  const { ping } = usePing();
 
   useEffect(() => {
     if (isRecording) {
-      ping = usePing();
+      console.log("recording started");
     }
   }, [isRecording]);
 
@@ -18,7 +16,7 @@ export default () => {
     if (isRecording) {
       console.log("ping", ping);
     }
-  }, [ping, isRecording]);
+  }, [isRecording, ping]);
 
   return null;
 };
