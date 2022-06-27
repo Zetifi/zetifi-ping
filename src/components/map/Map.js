@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import MapView from "react-native-maps";
 import { StyleSheet, View, Dimensions, SafeAreaView } from "react-native";
 import { Context as RegionContext } from "../../state/RegionContext";
+
 export default function Map() {
   const { animateToRegion, setAnimateToRegion } =
     React.useContext(RegionContext);

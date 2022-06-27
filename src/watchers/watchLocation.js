@@ -3,7 +3,7 @@ import { Context as LocationContext } from "../state/LocationContext";
 import useLocation from "../hooks/useLocation";
 
 export default () => {
-  const { location, errorMsg } = useLocation();
+  const location = useLocation();
   const { setLocation } = React.useContext(LocationContext);
 
   useEffect(() => {

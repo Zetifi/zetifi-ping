@@ -1,34 +1,38 @@
 import { abs, diff, max, mean, min, std, sum } from "mathjs";
 import React, { useEffect, useRef, useState } from "react";
 import Ping from "react-native-ping";
-import { Context as LogContext } from "../state/LogContext";
 
 export default (options) => {
-  const { isRecording } = React.useContext(LogContext);
   const [ping, setPing] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
 
   options = {
     interval: 1000,
     timeout: 3000,
     host: "8.8.8.8",
+    enabled: false,
     ...options,
   };
 
   useEffect(() => {
     let timeoutId = null;
 
-    if (isRecording) {
+    if (options.enabled) {
       let getPingResult = async () => {
+        let ping = null;
+        let errorMsg = null;
         try {
-          setPing(
-            await Ping.start(options.host, {
-              timeout: options.timeout,
-            })
-          );
+          ping = await Ping.start(options.host, {
+            timeout: options.timeout,
+          });
         } catch (e) {
-          setErrorMsg(e.message);
+          errorMsg = e.message;
         }
+
+        setPing({
+          datetime: new Date().toISOString(),
+          ping: ping,
+          errorMsg: errorMsg,
+        });
 
         timeoutId = setTimeout(getPingResult, options.interval);
       };
@@ -40,7 +44,7 @@ export default (options) => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [isRecording]);
+  }, [options.enabled, options.host, options.interval, options.timeout]);
 
-  return { ping, errorMsg };
+  return ping;
 };

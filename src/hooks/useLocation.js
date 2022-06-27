@@ -14,13 +14,21 @@ export default (options) => {
     let timeoutId = null;
 
     let getLocation = async () => {
+      let location = null;
+      let errorMsg = null;
+
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
+        errorMsg = "Permission to access location was denied";
       } else {
-        let location = await Location.getCurrentPositionAsync({});
-        setLocation(location);
+        location = await Location.getCurrentPositionAsync({});
       }
+
+      setLocation({
+        datetime: new Date().toISOString(),
+        location: location ? location.coords : null,
+        errorMsg: errorMsg,
+      });
 
       timeoutId = setTimeout(getLocation, options.interval);
     };
@@ -32,5 +40,5 @@ export default (options) => {
     };
   }, [options.interval]);
 
-  return { location, errorMsg };
+  return location;
 };
