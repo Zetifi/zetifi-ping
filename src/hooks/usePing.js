@@ -7,8 +7,8 @@ export default (options) => {
 
   options = {
     interval: 1000,
-    timeout: 3000,
-    host: "8.8.8.8",
+    timeout: 2000,
+    host: "10.9.45.248",
     enabled: false,
     ...options,
   };
@@ -43,6 +43,7 @@ export default (options) => {
 
     return () => {
       clearTimeout(timeoutId);
+      setPing(null);
     };
   }, [options.enabled, options.host, options.interval, options.timeout]);
 
