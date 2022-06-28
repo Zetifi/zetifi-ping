@@ -10,8 +10,8 @@ const LogMarker = (props) => {
     <>
       <Marker
         coordinate={{
-          latitude: props.latitude,
-          longitude: props.longitude,
+          latitude: props.entry.location.coords.latitude,
+          longitude: props.entry.location.coords.longitude,
         }}
         anchor={{ x: 0.5, y: 0.5 }}
       >
@@ -21,7 +21,7 @@ const LogMarker = (props) => {
           color={
             props.latest
               ? COLORS.blue
-              : Color(COLORS.blue).alpha(0.2).rgb().string()
+              : Color(COLORS.blue).alpha(0.5).rgb().string()
           }
         />
       </Marker>
@@ -33,14 +33,7 @@ export default (props) => {
   return (
     <>
       {props.log.map((entry, i) => {
-        return (
-          <LogMarker
-            key={i}
-            latest={props.latest}
-            latitude={entry.location.coords.latitude}
-            longitude={entry.location.coords.longitude}
-          />
-        );
+        return <LogMarker key={i} latest={props.latest} entry={entry} />;
       })}
     </>
   );
