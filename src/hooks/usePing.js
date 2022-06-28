@@ -7,7 +7,7 @@ export default (options) => {
 
   options = {
     interval: 1000,
-    timeout: 2000,
+    timeout: 1000,
     host: "10.9.45.248",
     enabled: false,
     ...options,

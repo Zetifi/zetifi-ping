@@ -25,9 +25,7 @@ export default () => {
       isRecording &&
       ping &&
       location &&
-      (log.length === 0 ||
-        (ping.datetime !== log[log.length - 1].ping.datetime &&
-          location.datetime !== log[log.length - 1].location.datetime))
+      (log.length === 0 || ping.datetime !== log[log.length - 1].ping.datetime)
     ) {
       appendToLog({
         ping: ping,
