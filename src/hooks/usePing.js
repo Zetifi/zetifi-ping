@@ -6,9 +6,6 @@ export default (options) => {
   const [ping, setPing] = useState(null);
 
   options = {
-    interval: 1000,
-    timeout: 1000,
-    host: "10.9.45.248",
     enabled: false,
     ...options,
   };

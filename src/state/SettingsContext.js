@@ -4,9 +4,13 @@ export const Context = React.createContext();
 
 const initialState = {
   ping: {
-    timeout: 1000,
-    interval: 1000,
     host: "8.8.8.8",
+    interval: 1000,
+    timeout: 1000,
+    packetSize: 56,
+  },
+  location: {
+    interval: 1000,
   },
 };
 
@@ -52,12 +56,16 @@ export const Provider = ({ children }) => {
 
   const value = {
     ...state,
-    setPingTimeout: (timeout) =>
-      dispatch({ type: actions.SET_PING_TIMEOUT, payload: timeout }),
-    setPingInterval: (interval) =>
-      dispatch({ type: actions.SET_PING_INTERVAL, payload: interval }),
-    setPingHost: (host) =>
-      dispatch({ type: actions.SET_PING_HOST, payload: host }),
+    setPingHost: (host) => {
+      dispatch({ type: actions.SET_PING_HOST, payload: host });
+    },
+    setPingInterval: (interval) => {
+      console.log("setPingInterval", interval);
+      dispatch({ type: actions.SET_PING_INTERVAL, payload: interval });
+    },
+    setPingTimeout: (timeout) => {
+      dispatch({ type: actions.SET_PING_TIMEOUT, payload: timeout });
+    },
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

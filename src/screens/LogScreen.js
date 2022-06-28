@@ -28,7 +28,7 @@ const onShare = async (log) => {
   });
 };
 
-export default function Map() {
+export default () => {
   const { logs } = useContext(LogContext);
 
   return (
@@ -66,7 +66,7 @@ export default function Map() {
       </TableView>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

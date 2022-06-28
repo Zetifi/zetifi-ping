@@ -2,13 +2,19 @@ import React, { useEffect, useState, useContext } from "react";
 import usePing from "../hooks/usePing";
 import { Context as LogContext } from "../state/LogContext";
 import { Context as LocationContext } from "../state/LocationContext";
+import { Context as SettingsContext } from "../state/SettingsContext";
 import { flatten } from "flat";
 
 export default () => {
   const { isRecording, appendToLog, startNewLog, logs } =
     useContext(LogContext);
+  const settings = useContext(SettingsContext);
   const { location } = useContext(LocationContext);
-  const ping = usePing({ enabled: isRecording });
+
+  const ping = usePing({
+    enabled: isRecording,
+    ...settings.ping,
+  });
 
   const [append, setAppend] = useState(false);
 
