@@ -4,7 +4,7 @@ export const Context = React.createContext();
 
 const initialState = {
   isRecording: false,
-  logs: [],
+  logs: [[]],
 };
 
 const actions = {
@@ -31,7 +31,7 @@ const reducer = (state, action) => {
     case actions.WRITE_LOG:
       return {
         ...state,
-        logs: [...state.logs, [action.payload]],
+        logs: [...state.logs, action.payload],
       };
 
     case actions.APPEND_LOG:
@@ -56,12 +56,13 @@ export const Provider = ({ children }) => {
     setIsRecording(truthy) {
       dispatch({ type: actions.SET_IS_RECORDING, payload: truthy });
     },
-    writeLog(payload, append = false) {
-      if (append) {
-        dispatch({ type: actions.APPEND_LOG, payload: payload });
-      } else {
-        dispatch({ type: actions.WRITE_LOG, payload: payload });
+    startNewLog() {
+      if (state && state.logs && state.logs[state.logs.length - 1].length > 0) {
+        dispatch({ type: actions.WRITE_LOG, payload: [] });
       }
+    },
+    appendToLog(payload) {
+      dispatch({ type: actions.APPEND_LOG, payload: payload });
     },
     setState(newState) {
       dispatch({ type: actions.SET, payload: newState });

@@ -48,8 +48,8 @@ export default () => {
               setAnimateToRegion({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
-                latitudeDelta: region.latitudeDelta,
-                longitudeDelta: region.longitudeDelta,
+                latitudeDelta: 0.000922,
+                longitudeDelta: 0.000421,
               });
             }
           }}
