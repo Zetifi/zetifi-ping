@@ -8,22 +8,41 @@ const initialState = {
 };
 
 const actions = {
+  SET: "SET",
   SET_IS_RECORDING: "SET_IS_RECORDING",
-  ADD_LOG: "ADD_LOG",
+  APPEND_LOG: "APPEND_LOG",
+  WRITE_LOG: "WRITE_LOG",
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case actions.SET:
+      return {
+        ...state,
+        ...action.payload,
+      };
+
     case actions.SET_IS_RECORDING:
       return {
         ...state,
         isRecording: action.payload,
       };
-    case actions.ADD_LOG:
+
+    case actions.WRITE_LOG:
       return {
         ...state,
-        logs: [...state.logs, action.payload],
+        logs: [...state.logs, [action.payload]],
       };
+
+    case actions.APPEND_LOG:
+      let logs = [...state.logs];
+      logs[logs.length - 1] = [...logs[logs.length - 1], action.payload];
+
+      return {
+        ...state,
+        logs,
+      };
+
     default:
       return state;
   }
@@ -37,8 +56,15 @@ export const Provider = ({ children }) => {
     setIsRecording(truthy) {
       dispatch({ type: actions.SET_IS_RECORDING, payload: truthy });
     },
-    addLog(log) {
-      dispatch({ type: actions.ADD_LOG, payload: log });
+    writeLog(payload, append = false) {
+      if (append) {
+        dispatch({ type: actions.APPEND_LOG, payload: payload });
+      } else {
+        dispatch({ type: actions.WRITE_LOG, payload: payload });
+      }
+    },
+    setState(newState) {
+      dispatch({ type: actions.SET, payload: newState });
     },
   };
 
