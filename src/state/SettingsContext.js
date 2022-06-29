@@ -22,6 +22,8 @@ const actions = {
   SET_PING_TIMEOUT: "SET_PING_TIMEOUT",
   SET_PING_INTERVAL: "SET_PING_INTERVAL",
   SET_PING_HOST: "SET_PING_HOST",
+  SET_PING_PACKET_SIZE: "SET_PING_PACKET_SIZE",
+  SET_LOCATION_INTERVAL: "SET_LOCATION_INTERVAL",
 };
 
 const reducer = (state, action) => {
@@ -50,6 +52,22 @@ const reducer = (state, action) => {
           host: action.payload,
         },
       };
+    case actions.SET_PING_PACKET_SIZE:
+      return {
+        ...state,
+        ping: {
+          ...state.ping,
+          packetSize: action.payload,
+        },
+      };
+    case actions.SET_LOCATION_INTERVAL:
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          interval: action.payload,
+        },
+      };
     default:
       return state;
   }
@@ -73,6 +91,18 @@ export const Provider = ({ children }) => {
       timeout = parseInt(timeout);
       if (checkWithinRange(timeout, 10, 100000)) {
         dispatch({ type: actions.SET_PING_TIMEOUT, payload: timeout });
+      }
+    },
+    setPingPacketSize: (packetSize) => {
+      packetSize = parseInt(packetSize);
+      if (checkWithinRange(packetSize, 56, 100000)) {
+        dispatch({ type: actions.SET_PING_PACKET_SIZE, payload: packetSize });
+      }
+    },
+    setLocationInterval: (interval) => {
+      interval = parseInt(interval);
+      if (checkWithinRange(interval, 10, 100000)) {
+        dispatch({ type: actions.SET_LOCATION_INTERVAL, payload: interval });
       }
     },
   };

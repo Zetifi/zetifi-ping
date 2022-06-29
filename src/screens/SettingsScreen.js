@@ -1,30 +1,58 @@
-import React, { useEffect, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  ScrollView,
-  Share,
-  TextInput,
-} from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet, ScrollView, TextInput } from "react-native";
 import { Context as SettingsContext } from "../state/SettingsContext";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
-import { COLORS } from "../constants";
+import NumericInput from "react-native-numeric-input";
 
-let capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+const TextCellInput = ({ title, value, onChange }) => {
+  return (
+    <Cell
+      title={title}
+      cellAccessoryView={
+        <TextInput
+          style={{ fontSize: 16, flex: 1, textAlign: "right" }}
+          value={value}
+          onChangeText={onChange}
+        />
+      }
+    />
+  );
 };
 
-let KEY_TO_TITLE = {
-  ping: {
-    host: "Host",
-    interval: "Interval (ms)",
-    timeout: "Timeout (ms)",
-    packetSize: "Packet Size (bytes)",
-  },
-  location: {
-    interval: "Interval (ms)",
-  },
+const NumericInputCell = ({ title, value, onChange, disabled = false }) => {
+  return (
+    <Cell
+      title={title}
+      cellAccessoryView={
+        <NumericInput
+          editable={!disabled}
+          step={100}
+          value={value}
+          onChange={onChange}
+          borderColor={"rgba(0,0,0,0)"}
+          rounded={true}
+          totalWidth={100}
+          minValue={10}
+          maxValue={9999}
+        />
+      }
+    />
+  );
+};
+
+const DisabledInputCell = ({ title, value }) => {
+  return (
+    <Cell
+      title={title}
+      cellAccessoryView={
+        <TextInput
+          style={{ fontSize: 16, flex: 1, textAlign: "right" }}
+          value={value.toString()}
+          editable={false}
+        />
+      }
+    />
+  );
 };
 
 export default () => {
@@ -33,44 +61,34 @@ export default () => {
     <ScrollView style={styles.container}>
       <TableView>
         <Section header="Ping Settings">
-          {Object.keys(settings.ping).map((key, i) => {
-            return (
-              <Cell
-                key={i}
-                title={KEY_TO_TITLE.ping[key]}
-                detail={settings.ping[key].toString()}
-                cellAccessoryView={
-                  <TextInput
-                    style={{ fontSize: 16, flex: 1, textAlign: "right" }}
-                    value={settings.ping[key].toString()}
-                    onChangeText={(value) => {
-                      let f = settings[`setPing${capitalizeFirstLetter(key)}`];
-                      if (f) {
-                        f(value);
-                      }
-                    }}
-                  />
-                }
-              />
-            );
-          })}
+          <TextCellInput
+            title="Host"
+            value={settings.ping.host}
+            onChange={settings.setPingHost}
+          />
+          <NumericInputCell
+            title={"Interval (ms)"}
+            value={settings.ping["interval"]}
+            onChange={settings.setPingInterval}
+          />
+          <NumericInputCell
+            title={"Timeout (ms)"}
+            value={settings.ping["timeout"]}
+            onChange={settings.setPingTimeout}
+          />
+          <DisabledInputCell
+            title={"Packet Size (bytes)"}
+            value={settings.ping["packetSize"]}
+            onChange={settings.setPingPacketSize}
+            disabled={true}
+          />
         </Section>
         <Section header="GPS Settings">
-          {Object.keys(settings.location).map((key, i) => {
-            return (
-              <Cell
-                key={i}
-                title={KEY_TO_TITLE.location[key]}
-                detail={settings.location[key].toString()}
-                cellAccessoryView={
-                  <TextInput
-                    style={{ fontSize: 16, flex: 1, textAlign: "right" }}
-                    value={settings.location[key].toString()}
-                  />
-                }
-              />
-            );
-          })}
+          <NumericInputCell
+            title={"Interval (ms)"}
+            value={settings.location["interval"]}
+            onChange={settings.setLocationInterval}
+          />
         </Section>
       </TableView>
     </ScrollView>
@@ -79,7 +97,6 @@ export default () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#EFEFF4",
     paddingTop: 20,
     paddingBottom: 20,
   },
