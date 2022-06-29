@@ -11,7 +11,7 @@ const initialState = {
     host: "8.8.8.8",
     interval: 1000,
     timeout: 1000,
-    packetSize: 56,
+    payloadSize: 56,
   },
   location: {
     interval: 1000,
@@ -23,7 +23,7 @@ const actions = {
   SET_PING_TIMEOUT: "SET_PING_TIMEOUT",
   SET_PING_INTERVAL: "SET_PING_INTERVAL",
   SET_PING_HOST: "SET_PING_HOST",
-  SET_PING_PACKET_SIZE: "SET_PING_PACKET_SIZE",
+  SET_PING_PAYLOAD_SIZE: "SET_PING_PAYLOAD_SIZE",
   SET_LOCATION_INTERVAL: "SET_LOCATION_INTERVAL",
 };
 
@@ -58,12 +58,12 @@ const reducer = (state, action) => {
           host: action.payload,
         },
       };
-    case actions.SET_PING_PACKET_SIZE:
+    case actions.SET_PING_PAYLOAD_SIZE:
       return {
         ...state,
         ping: {
           ...state.ping,
-          packetSize: action.payload,
+          payloadSize: action.payload,
         },
       };
     case actions.SET_LOCATION_INTERVAL:
@@ -102,17 +102,15 @@ export const Provider = ({ children }) => {
         dispatch({ type: actions.SET_PING_TIMEOUT, payload: timeout });
       }
     },
-    setPingPacketSize: (packetSize) => {
-      packetSize = parseInt(packetSize);
-      if (checkWithinRange(packetSize, 56, 100000)) {
-        dispatch({ type: actions.SET_PING_PACKET_SIZE, payload: packetSize });
-      }
-    },
     setLocationInterval: (interval) => {
       interval = parseInt(interval);
       if (checkWithinRange(interval, 10, 100000)) {
         dispatch({ type: actions.SET_LOCATION_INTERVAL, payload: interval });
       }
+    },
+    setPingPayloadSize: (payloadSize) => {
+      payloadSize = parseInt(payloadSize);
+      dispatch({ type: actions.SET_PING_PAYLOAD_SIZE, payload: payloadSize });
     },
   };
 

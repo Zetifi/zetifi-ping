@@ -19,21 +19,28 @@ const TextCellInput = ({ title, value, onChange }) => {
   );
 };
 
-const NumericInputCell = ({ title, value, onChange, disabled = false }) => {
+const NumericInputCell = ({
+  title,
+  value,
+  onChange,
+  maxValue = 9999,
+  minValue = 10,
+  step = 100,
+}) => {
   return (
     <Cell
       title={title}
       cellAccessoryView={
         <NumericInput
-          editable={!disabled}
-          step={100}
+          step={step}
           value={value}
           onChange={onChange}
           borderColor={"rgba(0,0,0,0)"}
           rounded={true}
-          totalWidth={100}
-          minValue={10}
-          maxValue={9999}
+          totalHeight={40}
+          totalWidth={150}
+          minValue={minValue}
+          maxValue={maxValue}
         />
       }
     />
@@ -76,11 +83,13 @@ export default () => {
             value={settings.ping["timeout"]}
             onChange={settings.setPingTimeout}
           />
-          <DisabledInputCell
-            title={"Packet Size (bytes)"}
-            value={settings.ping["packetSize"]}
-            onChange={settings.setPingPacketSize}
-            disabled={true}
+          <NumericInputCell
+            title={"Payload Size (bytes)"}
+            value={settings.ping["payloadSize"]}
+            onChange={settings.setPingPayloadSize}
+            maxValue={null}
+            minValue={0}
+            step={56}
           />
         </Section>
         <Section header="GPS Settings">

@@ -20,6 +20,7 @@ export default (options) => {
         try {
           ping = await Ping.start(options.host, {
             timeout: options.timeout,
+            payloadSize: options.payloadSize,
           });
         } catch (e) {
           errorMsg = e.message;
