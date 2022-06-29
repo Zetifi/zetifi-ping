@@ -33,7 +33,6 @@ export default () => {
       location &&
       (log.length === 0 || ping.datetime !== log[log.length - 1].ping.datetime)
     ) {
-      console.log("ping", ping);
       appendToLog({
         ping: ping,
         location: location,
