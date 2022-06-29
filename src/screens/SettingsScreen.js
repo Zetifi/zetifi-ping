@@ -88,7 +88,7 @@ export default () => {
             value={settings.ping["payloadSize"]}
             onChange={settings.setPingPayloadSize}
             maxValue={null}
-            minValue={0}
+            minValue={1}
             step={56}
           />
         </Section>
