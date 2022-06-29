@@ -1,43 +1,61 @@
 import React, { useState, useEffect } from "react";
+import Geolocation from "@react-native-community/geolocation";
 import * as Location from "expo-location";
 
 export default (options) => {
   const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
 
   options = {
+    enableHighAccuracy: true,
+    timeout: 3000,
+    maximumAge: 1000,
+    distanceFilter: 0,
     ...options,
   };
 
   useEffect(() => {
-    let timeoutId = null;
+    let watchId = null;
 
     let getLocation = async () => {
-      let location = null;
-      let errorMsg = null;
-
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        errorMsg = "Permission to access location was denied";
+        setLocation({
+          datetime: new Date().toISOString(),
+          coords: null,
+          errorMsg: "Location permission not granted",
+        });
       } else {
-        location = await Location.getCurrentPositionAsync({});
+        watchId = Geolocation.watchPosition(
+          (position) => {
+            setLocation({
+              datetime: new Date().toISOString(),
+              coords: position.coords,
+              errorMsg: null,
+            });
+          },
+          (error) => {
+            setLocation({
+              datetime: new Date().toISOString(),
+              coords: null,
+              errorMsg: error.message,
+            });
+          },
+          options
+        );
       }
-
-      setLocation({
-        datetime: new Date().toISOString(),
-        coords: location ? location.coords : null,
-        errorMsg: errorMsg,
-      });
-
-      timeoutId = setTimeout(getLocation, options.interval);
     };
 
-    timeoutId = setTimeout(getLocation, 0);
+    getLocation();
 
     return () => {
-      clearTimeout(timeoutId);
+      Geolocation.clearWatch(watchId);
     };
-  }, [options.interval]);
+  }, [
+    options.enableHighAccuracy,
+    options.timeout,
+    options.maximumAge,
+    options.distanceFilter,
+  ]);
 
   return location;
 };

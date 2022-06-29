@@ -93,10 +93,24 @@ export default () => {
           />
         </Section>
         <Section header="GPS Settings">
+          <DisabledInputCell
+            title={"Enable High Accuracy"}
+            value={settings.location["enableHighAccuracy"]}
+          />
           <NumericInputCell
-            title={"Interval (ms)"}
-            value={settings.location["interval"]}
-            onChange={settings.setLocationInterval}
+            title={"Timeout (ms)"}
+            value={settings.location["timeout"]}
+            onChange={settings.setLocationTimeout}
+          />
+          <NumericInputCell
+            title={"Maximum Age (ms)"}
+            value={settings.location["maximumAge"]}
+            onChange={settings.setLocationMaximumAge}
+          />
+          <NumericInputCell
+            title={"Distance Filter (meters)"}
+            value={settings.location["distanceFilter"]}
+            onChange={settings.setLocationDistanceFilter}
           />
         </Section>
       </TableView>

@@ -14,7 +14,10 @@ const initialState = {
     payloadSize: 56,
   },
   location: {
-    interval: 1000,
+    enableHighAccuracy: true,
+    timeout: 3000,
+    maximumAge: 1000,
+    distanceFilter: 0,
   },
 };
 
@@ -24,7 +27,10 @@ const actions = {
   SET_PING_INTERVAL: "SET_PING_INTERVAL",
   SET_PING_HOST: "SET_PING_HOST",
   SET_PING_PAYLOAD_SIZE: "SET_PING_PAYLOAD_SIZE",
-  SET_LOCATION_INTERVAL: "SET_LOCATION_INTERVAL",
+  SET_LOCATION_ENABLE_HIGH_ACCURACY: "SET_LOCATION_ENABLE_HIGH_ACCURACY",
+  SET_LOCATION_TIMEOUT: "SET_LOCATION_TIMEOUT",
+  SET_LOCATION_MAXIMUM_AGE: "SET_LOCATION_MAXIMUM_AGE",
+  SET_LOCATION_DISTANCE_FILTER: "SET_LOCATION_DISTANCE_FILTER",
 };
 
 const reducer = (state, action) => {
@@ -66,12 +72,36 @@ const reducer = (state, action) => {
           payloadSize: action.payload,
         },
       };
-    case actions.SET_LOCATION_INTERVAL:
+    case actions.SET_LOCATION_ENABLE_HIGH_ACCURACY:
       return {
         ...state,
         location: {
           ...state.location,
-          interval: action.payload,
+          enableHighAccuracy: action.payload,
+        },
+      };
+    case actions.SET_LOCATION_TIMEOUT:
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          timeout: action.payload,
+        },
+      };
+    case actions.SET_LOCATION_MAXIMUM_AGE:
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          maximumAge: action.payload,
+        },
+      };
+    case actions.SET_LOCATION_DISTANCE_FILTER:
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          distanceFilter: action.payload,
         },
       };
     default:
@@ -102,15 +132,39 @@ export const Provider = ({ children }) => {
         dispatch({ type: actions.SET_PING_TIMEOUT, payload: timeout });
       }
     },
-    setLocationInterval: (interval) => {
-      interval = parseInt(interval);
-      if (checkWithinRange(interval, 10, 100000)) {
-        dispatch({ type: actions.SET_LOCATION_INTERVAL, payload: interval });
-      }
-    },
     setPingPayloadSize: (payloadSize) => {
       payloadSize = parseInt(payloadSize);
       dispatch({ type: actions.SET_PING_PAYLOAD_SIZE, payload: payloadSize });
+    },
+    setLocationEnableHighAccuracy: (enableHighAccuracy) => {
+      dispatch({
+        type: actions.SET_LOCATION_ENABLE_HIGH_ACCURACY,
+        payload: enableHighAccuracy,
+      });
+    },
+    setLocationTimeout: (timeout) => {
+      timeout = parseInt(timeout);
+      if (checkWithinRange(timeout, 10, 100000)) {
+        dispatch({ type: actions.SET_LOCATION_TIMEOUT, payload: timeout });
+      }
+    },
+    setLocationMaximumAge: (maximumAge) => {
+      maximumAge = parseInt(maximumAge);
+      if (checkWithinRange(maximumAge, 10, 100000)) {
+        dispatch({
+          type: actions.SET_LOCATION_MAXIMUM_AGE,
+          payload: maximumAge,
+        });
+      }
+    },
+    setLocationDistanceFilter: (distanceFilter) => {
+      distanceFilter = parseInt(distanceFilter);
+      if (checkWithinRange(distanceFilter, 0, 100000)) {
+        dispatch({
+          type: actions.SET_LOCATION_DISTANCE_FILTER,
+          payload: distanceFilter,
+        });
+      }
     },
   };
 
