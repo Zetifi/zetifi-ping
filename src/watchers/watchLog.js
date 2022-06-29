@@ -36,9 +36,13 @@ export default () => {
       appendToLog({
         ping: ping,
         location: location,
+        settings: {
+          ping: settings.ping,
+          location: settings.location,
+        },
       });
     }
-  }, [isRecording, ping, location, append]);
+  }, [isRecording, ping, location, settings.ping, settings.location]);
 
   return null;
 };
