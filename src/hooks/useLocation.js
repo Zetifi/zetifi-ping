@@ -6,7 +6,6 @@ export default (options) => {
   const [errorMsg, setErrorMsg] = useState(null);
 
   options = {
-    interval: 1000,
     ...options,
   };
 
