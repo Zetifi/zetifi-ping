@@ -23,7 +23,7 @@ const NumericInputCell = ({
   title,
   value,
   onChange,
-  maxValue = 9999,
+  maxValue = 30000,
   minValue = 10,
   step = 100,
 }) => {
@@ -87,7 +87,7 @@ export default () => {
             title={"Payload Size (bytes)"}
             value={settings.ping["payloadSize"]}
             onChange={settings.setPingPayloadSize}
-            maxValue={null}
+            maxValue={65500}
             minValue={1}
             step={56}
           />
