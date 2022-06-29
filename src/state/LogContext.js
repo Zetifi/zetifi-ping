@@ -53,6 +53,9 @@ export const Provider = ({ children }) => {
 
   const value = {
     ...state,
+    setState(newState) {
+      dispatch({ type: actions.SET, payload: newState });
+    },
     setIsRecording(truthy) {
       dispatch({ type: actions.SET_IS_RECORDING, payload: truthy });
     },
@@ -63,9 +66,6 @@ export const Provider = ({ children }) => {
     },
     appendToLog(payload) {
       dispatch({ type: actions.APPEND_LOG, payload: payload });
-    },
-    setState(newState) {
-      dispatch({ type: actions.SET, payload: newState });
     },
   };
 

@@ -19,6 +19,7 @@ const initialState = {
 };
 
 const actions = {
+  SET: "SET",
   SET_PING_TIMEOUT: "SET_PING_TIMEOUT",
   SET_PING_INTERVAL: "SET_PING_INTERVAL",
   SET_PING_HOST: "SET_PING_HOST",
@@ -28,6 +29,11 @@ const actions = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case actions.SET:
+      return {
+        ...state,
+        ...action.payload,
+      };
     case actions.SET_PING_TIMEOUT:
       return {
         ...state,
@@ -78,6 +84,9 @@ export const Provider = ({ children }) => {
 
   const value = {
     ...state,
+    setState(newState) {
+      dispatch({ type: actions.SET, payload: newState });
+    },
     setPingHost: (host) => {
       dispatch({ type: actions.SET_PING_HOST, payload: host });
     },
