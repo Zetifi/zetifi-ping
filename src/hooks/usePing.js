@@ -18,7 +18,6 @@ export default (options) => {
         let ping = null;
         let errorMsg = null;
         try {
-          console.log(options.timeout);
           ping = await Ping.start(options.host, {
             timeout: options.timeout,
           });
