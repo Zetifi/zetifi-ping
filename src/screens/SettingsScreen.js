@@ -44,7 +44,6 @@ export default () => {
                     style={{ fontSize: 16, flex: 1, textAlign: "right" }}
                     value={settings.ping[key].toString()}
                     onChangeText={(value) => {
-                      console.log(value);
                       let f = settings[`setPing${capitalizeFirstLetter(key)}`];
                       if (f) {
                         f(value);

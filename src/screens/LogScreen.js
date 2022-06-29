@@ -15,13 +15,9 @@ const onShare = async (log) => {
   let fileUri = `${FileSystem.documentDirectory}${fileName}`;
   let csvContents = jsonToCSV(JSON.stringify(log.map(flatten)));
 
-  try {
-    await FileSystem.writeAsStringAsync(fileUri, csvContents, {
-      encoding: FileSystem.EncodingType.UTF8,
-    });
-  } catch (e) {
-    console.log(e);
-  }
+  await FileSystem.writeAsStringAsync(fileUri, csvContents, {
+    encoding: FileSystem.EncodingType.UTF8,
+  });
 
   const result = await Share.share({
     url: fileUri,

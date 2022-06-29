@@ -2,6 +2,10 @@ import React from "react";
 
 export const Context = React.createContext();
 
+const checkWithinRange = (value, min, max) => {
+  return value >= min && value <= max;
+};
+
 const initialState = {
   ping: {
     host: "8.8.8.8",
@@ -60,11 +64,16 @@ export const Provider = ({ children }) => {
       dispatch({ type: actions.SET_PING_HOST, payload: host });
     },
     setPingInterval: (interval) => {
-      console.log("setPingInterval", interval);
-      dispatch({ type: actions.SET_PING_INTERVAL, payload: interval });
+      interval = parseInt(interval);
+      if (checkWithinRange(interval, 10, 100000)) {
+        dispatch({ type: actions.SET_PING_INTERVAL, payload: interval });
+      }
     },
     setPingTimeout: (timeout) => {
-      dispatch({ type: actions.SET_PING_TIMEOUT, payload: timeout });
+      timeout = parseInt(timeout);
+      if (checkWithinRange(timeout, 10, 100000)) {
+        dispatch({ type: actions.SET_PING_TIMEOUT, payload: timeout });
+      }
     },
   };
 
