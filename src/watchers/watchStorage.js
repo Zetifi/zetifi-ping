@@ -37,8 +37,6 @@ export default (props) => {
       logs.setState(restoredLogs);
     }
 
-    console.log(restoredSettings);
-
     if (restoredSettings) {
       settings.setState(restoredSettings);
     }

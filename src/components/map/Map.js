@@ -5,8 +5,11 @@ import { Context as RegionContext } from "../../state/RegionContext";
 import { Context as LogContext } from "../../state/LogContext";
 import { Context as SettingsContext } from "../../state/SettingsContext";
 import LogMarkerSet from "./LogMarkerSet";
+import { useKeepAwake } from "expo-keep-awake";
 
 export default function Map() {
+  useKeepAwake();
+
   const { logs } = useContext(LogContext);
   const { animateToRegion, setAnimateToRegion } = useContext(RegionContext);
   const settings = useContext(SettingsContext);
