@@ -19,6 +19,9 @@ const initialState = {
     maximumAge: 1000,
     distanceFilter: 0,
   },
+  actionBar: {
+    follow: false,
+  },
 };
 
 const actions = {
@@ -31,14 +34,25 @@ const actions = {
   SET_LOCATION_TIMEOUT: "SET_LOCATION_TIMEOUT",
   SET_LOCATION_MAXIMUM_AGE: "SET_LOCATION_MAXIMUM_AGE",
   SET_LOCATION_DISTANCE_FILTER: "SET_LOCATION_DISTANCE_FILTER",
+  SET_ACTION_BAR_FOLLOW: "SET_ACTION_BAR_FOLLOW",
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case actions.SET:
       return {
-        ...state,
-        ...action.payload,
+        ping: {
+          ...state.ping,
+          ...action.payload.ping,
+        },
+        location: {
+          ...state.location,
+          ...action.payload.location,
+        },
+        actionBar: {
+          ...state.actionBar,
+          ...action.payload.actionBar,
+        },
       };
     case actions.SET_PING_TIMEOUT:
       return {
@@ -104,6 +118,14 @@ const reducer = (state, action) => {
           distanceFilter: action.payload,
         },
       };
+    case actions.SET_ACTION_BAR_FOLLOW:
+      return {
+        ...state,
+        actionBar: {
+          ...state.actionBar,
+          follow: action.payload,
+        },
+      };
     default:
       return state;
   }
@@ -165,6 +187,9 @@ export const Provider = ({ children }) => {
           payload: distanceFilter,
         });
       }
+    },
+    setActionBarFollow: (follow) => {
+      dispatch({ type: actions.SET_ACTION_BAR_FOLLOW, payload: follow });
     },
   };
 

@@ -8,19 +8,30 @@ import {
   SafeAreaView,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { Context as RegionContext } from "../../state/RegionContext";
 import { Context as LocationContext } from "../../state/LocationContext";
+import { Context as SettingsContext } from "../../state/SettingsContext";
 import { Context as LogContext } from "../../state/LogContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { COLORS, ICON_SIZE } from "../../constants";
+import Color from "color";
 
-const ActionButton = ({ icon, color, onPress }) => {
+const ActionButton = ({
+  icon,
+  onPress,
+  IconComponent,
+  color = "white",
+  active = false,
+}) => {
+  let activeColor = Color(color).alpha(0.2).rgb().string();
+
   return (
     <TouchableOpacity onPress={onPress} style={styles.actionButton}>
-      <MaterialIcons
+      <IconComponent
         name={icon}
         size={ICON_SIZE}
-        color={color ? color : "white"}
+        color={active ? activeColor : color}
       />
     </TouchableOpacity>
   );
@@ -29,12 +40,14 @@ const ActionButton = ({ icon, color, onPress }) => {
 export default () => {
   const { region, setAnimateToRegion } = React.useContext(RegionContext);
   const { location } = React.useContext(LocationContext);
+  const settings = React.useContext(SettingsContext);
   const { isRecording, setIsRecording } = React.useContext(LogContext);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ ...styles.actionBar }}>
         <ActionButton
+          IconComponent={MaterialIcons}
           icon={isRecording ? "stop" : "fiber-manual-record"}
           color={COLORS.errorRed}
           onPress={() => {
@@ -43,15 +56,10 @@ export default () => {
         ></ActionButton>
         <ActionButton
           icon="my-location"
+          IconComponent={MaterialIcons}
+          active={settings.actionBar.follow}
           onPress={() => {
-            if (location) {
-              setAnimateToRegion({
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-                latitudeDelta: 0.000922,
-                longitudeDelta: 0.000421,
-              });
-            }
+            settings.setActionBarFollow(!settings.actionBar.follow);
           }}
         ></ActionButton>
       </View>

@@ -3,11 +3,13 @@ import MapView from "react-native-maps";
 import { StyleSheet, View, Dimensions, SafeAreaView } from "react-native";
 import { Context as RegionContext } from "../../state/RegionContext";
 import { Context as LogContext } from "../../state/LogContext";
+import { Context as SettingsContext } from "../../state/SettingsContext";
 import LogMarkerSet from "./LogMarkerSet";
 
 export default function Map() {
   const { logs } = useContext(LogContext);
   const { animateToRegion, setAnimateToRegion } = useContext(RegionContext);
+  const settings = useContext(SettingsContext);
   const mapRef = React.useRef();
 
   useEffect(() => {
@@ -18,7 +20,12 @@ export default function Map() {
   }, [animateToRegion]);
 
   return (
-    <MapView ref={mapRef} style={styles.map} showsUserLocation={true}>
+    <MapView
+      ref={mapRef}
+      style={styles.map}
+      showsUserLocation={true}
+      followsUserLocation={settings.actionBar.follow}
+    >
       {logs.map((log, i) => {
         return (
           <LogMarkerSet key={i} log={log} latest={i === logs.length - 1} />
