@@ -17,6 +17,7 @@ export const COLORS = {
   linkColor: "blue",
   zetifiBlue: "rgb(31, 174, 226)",
   zetifiObsidian: "rgb(0, 0, 47)",
+  headerTintColor: "rgb(24, 109, 255)",
 };
 
 export const ICON_SIZE = 25;

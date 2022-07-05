@@ -7,6 +7,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import MapScreen from "../screens/MapScreen";
 import LogListScreen from "../screens/LogListScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import LogNavigator from "./LogNavigator";
 import { COLORS, ICON_SIZE } from "../constants";
 import { Context as LogContext } from "../state/LogContext";
 
@@ -19,7 +20,7 @@ const optionFactory = (icon, label) => ({
   tabBarLabel: label,
 });
 
-export default function App() {
+export default () => {
   const { isRecording } = React.useContext(LogContext);
 
   return (
@@ -40,8 +41,8 @@ export default function App() {
           options={optionFactory("map", "Map")}
         />
         <Tab.Screen
-          name="Logs"
-          component={LogListScreen}
+          name="LogsNavigator"
+          component={LogNavigator}
           options={optionFactory("list", "Logs")}
         />
         <Tab.Screen
@@ -52,4 +53,4 @@ export default function App() {
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
