@@ -30,6 +30,14 @@ export default () => {
   return (
     <ScrollView style={styles.container}>
       <TableView>
+        <Section header="Testing">
+          <Cell
+            cellStyle="Basic"
+            title="Pressable w/ accessory"
+            accessory="DisclosureIndicator"
+            onPress={() => console.log("Heyho!")}
+          />
+        </Section>
         <Section header="Recordings">
           {logs
             .filter((log) => log.length > 0)

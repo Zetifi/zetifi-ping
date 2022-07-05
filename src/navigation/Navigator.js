@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import MapScreen from "../screens/MapScreen";
-import LogScreen from "../screens/LogScreen";
+import LogListScreen from "../screens/LogListScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import { COLORS, ICON_SIZE } from "../constants";
 import { Context as LogContext } from "../state/LogContext";
@@ -41,7 +41,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Logs"
-          component={LogScreen}
+          component={LogListScreen}
           options={optionFactory("list", "Logs")}
         />
         <Tab.Screen
