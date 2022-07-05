@@ -41,7 +41,6 @@ export default ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#EFEFF4",
-    paddingTop: 20,
     paddingBottom: 20,
   },
 });

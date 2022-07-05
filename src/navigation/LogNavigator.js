@@ -1,7 +1,6 @@
 import React from "react";
 
 import { EvilIcons } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import LogListScreen from "../screens/LogListScreen";
@@ -11,10 +10,9 @@ import { COLORS } from "../constants";
 import { flatten } from "flat";
 import * as FileSystem from "expo-file-system";
 import { jsonToCSV } from "react-native-csv";
-import { Share, Button } from "react-native";
+import { Share } from "react-native";
 
 const onShare = async (log) => {
-  console.log(log);
   const fileName = `export-${log[0].location.datetime}.csv`;
 
   let fileUri = `${FileSystem.documentDirectory}${fileName}`;

@@ -120,7 +120,6 @@ export default () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
     paddingBottom: 20,
   },
 });

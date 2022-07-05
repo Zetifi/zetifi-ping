@@ -5,11 +5,10 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import MapScreen from "../screens/MapScreen";
-import LogListScreen from "../screens/LogListScreen";
-import SettingsScreen from "../screens/SettingsScreen";
 import LogNavigator from "./LogNavigator";
 import { COLORS, ICON_SIZE } from "../constants";
 import { Context as LogContext } from "../state/LogContext";
+import SettingsNavigator from "./SettingsNavigator";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -46,8 +45,8 @@ export default () => {
           options={optionFactory("list", "Logs")}
         />
         <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
+          name="SettingsNavigator"
+          component={SettingsNavigator}
           options={optionFactory("settings", "Settings")}
         />
       </Tab.Navigator>
