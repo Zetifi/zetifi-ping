@@ -46,7 +46,7 @@ export default ({ route }) => {
 
         <Section header="Log Statistics">
           <DisabledInputCell
-            title="Total Points"
+            title="Total Pings"
             value={route.params.log.length}
           />
           <DisabledInputCell
