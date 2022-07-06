@@ -1,11 +1,13 @@
-export const wasPingSuccesful = (ping) =>
-  ping.ping === null || Number.isNaN(Number(ping.ping));
+export const wasPingSuccesful = (ping) => !wasPingDropped(ping);
 
 export const wasPingDropped = (ping) =>
   ping.ping === null || Number.isNaN(Number(ping.ping));
 
 export const getSuccesfulPings = (logs) =>
-  logs.map((log) => log.ping.ping).filter(wasPingSuccesful);
+  logs
+    .map((log) => log.ping)
+    .filter(wasPingSuccesful)
+    .map((ping) => ping.ping);
 
 export const calculateDroppedPercentage = (logs) => {
   let pings = logs.map((log) => log.ping);
