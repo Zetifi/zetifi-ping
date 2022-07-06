@@ -4,8 +4,11 @@ import { Circle, Marker } from "react-native-maps";
 import { Context as LocationContext } from "../../state/LocationContext";
 import { COLORS } from "../../constants";
 const Color = require("color");
+import { wasPingDropped } from "../../logUtils";
 
 const LogMarker = (props) => {
+  let color = wasPingDropped(props.entry.ping) ? COLORS.errorRed : COLORS.blue;
+
   return (
     <>
       <Marker
@@ -18,11 +21,7 @@ const LogMarker = (props) => {
         <MaterialIcons
           name="circle"
           size={10}
-          color={
-            props.latest
-              ? COLORS.blue
-              : Color(COLORS.blue).alpha(0.5).rgb().string()
-          }
+          color={props.latest ? color : Color(color).alpha(0.5).rgb().string()}
         />
       </Marker>
     </>
