@@ -111,6 +111,7 @@ export default () => {
             title={"Distance Filter (meters)"}
             value={settings.location["distanceFilter"]}
             onChange={settings.setLocationDistanceFilter}
+            minValue={0}
           />
         </Section>
       </TableView>
