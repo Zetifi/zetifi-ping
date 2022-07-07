@@ -11,16 +11,8 @@ export default function Map() {
   useKeepAwake();
 
   const { logs } = useContext(LogContext);
-  const { animateToRegion, setAnimateToRegion } = useContext(RegionContext);
   const settings = useContext(SettingsContext);
   const mapRef = React.useRef();
-
-  useEffect(() => {
-    if (animateToRegion) {
-      mapRef.current.animateToRegion(animateToRegion, 1000);
-      setAnimateToRegion(null);
-    }
-  }, [animateToRegion]);
 
   return (
     <MapView

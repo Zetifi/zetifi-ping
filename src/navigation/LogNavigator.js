@@ -13,7 +13,7 @@ import { jsonToCSV } from "react-native-csv";
 import { Share } from "react-native";
 
 const onShare = async (log) => {
-  const fileName = `export-${log[0].location.datetime}.csv`;
+  const fileName = `export-${log[0].ping.datetime}.csv`;
 
   let fileUri = `${FileSystem.documentDirectory}${fileName}`;
   let csvContents = jsonToCSV(JSON.stringify(log.map(flatten)));

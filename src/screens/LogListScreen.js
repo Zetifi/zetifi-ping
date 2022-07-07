@@ -12,14 +12,11 @@ export default ({ navigation }) => {
         {logs
           .filter((log) => log.length > 0)
           .sort((a, b) => {
-            return (
-              new Date(b[0].location.datetime) -
-              new Date(a[0].location.datetime)
-            );
+            return new Date(b[0].ping.datetime) - new Date(a[0].ping.datetime);
           })
           .map((log, i) => {
             let logName = `${new Date(
-              log[0].location.datetime
+              log[0].ping.datetime
             ).toLocaleString()} (n=${log.length})`;
             return (
               <Cell

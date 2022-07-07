@@ -38,8 +38,6 @@ const ActionButton = ({
 };
 
 export default () => {
-  const { region, setAnimateToRegion } = React.useContext(RegionContext);
-  const { location } = React.useContext(LocationContext);
   const settings = React.useContext(SettingsContext);
   const { isRecording, setIsRecording } = React.useContext(LogContext);
 

@@ -16,8 +16,6 @@ export default () => {
     ...settings.ping,
   });
 
-  const [append, setAppend] = useState(false);
-
   useEffect(() => {
     if (!isRecording) {
       startNewLog();
