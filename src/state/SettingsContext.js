@@ -22,6 +22,9 @@ const initialState = {
   actionBar: {
     follow: false,
   },
+  speedTestModal: {
+    visible: false,
+  },
 };
 
 const actions = {
@@ -35,6 +38,7 @@ const actions = {
   SET_LOCATION_MAXIMUM_AGE: "SET_LOCATION_MAXIMUM_AGE",
   SET_LOCATION_DISTANCE_FILTER: "SET_LOCATION_DISTANCE_FILTER",
   SET_ACTION_BAR_FOLLOW: "SET_ACTION_BAR_FOLLOW",
+  SET_SPEED_TEST_MODAL_VISIBLE: "SET_SPEED_TEST_MODAL_VISIBLE",
 };
 
 const reducer = (state, action) => {
@@ -52,6 +56,10 @@ const reducer = (state, action) => {
         actionBar: {
           ...state.actionBar,
           ...action.payload.actionBar,
+        },
+        speedTestModal: {
+          ...state.speedTestModal,
+          ...action.payload.speedTestModal,
         },
       };
     case actions.SET_PING_TIMEOUT:
@@ -126,6 +134,14 @@ const reducer = (state, action) => {
           follow: action.payload,
         },
       };
+    case actions.SET_SPEED_TEST_MODAL_VISIBLE:
+      return {
+        ...state,
+        speedTestModal: {
+          ...state.speedTestModal,
+          visible: action.payload,
+        },
+      };
     default:
       return state;
   }
@@ -190,6 +206,12 @@ export const Provider = ({ children }) => {
     },
     setActionBarFollow: (follow) => {
       dispatch({ type: actions.SET_ACTION_BAR_FOLLOW, payload: follow });
+    },
+    setSpeedTestModalVisible: (visible) => {
+      dispatch({
+        type: actions.SET_SPEED_TEST_MODAL_VISIBLE,
+        payload: visible,
+      });
     },
   };
 

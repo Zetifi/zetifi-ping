@@ -5,6 +5,11 @@ export const Context = React.createContext();
 const initialState = {
   isRecording: false,
   logs: [[]],
+  adhocLog: {
+    downloadSpeed: null,
+    uploadSpeed: null,
+    datetime: null,
+  },
 };
 
 const actions = {
@@ -12,6 +17,7 @@ const actions = {
   SET_IS_RECORDING: "SET_IS_RECORDING",
   APPEND_LOG: "APPEND_LOG",
   WRITE_LOG: "WRITE_LOG",
+  SET_ADHOC_LOG: "SET_ADHOC_LOG",
 };
 
 const reducer = (state, action) => {
@@ -43,6 +49,12 @@ const reducer = (state, action) => {
         logs,
       };
 
+    case actions.SET_ADHOC_LOG:
+      return {
+        ...state,
+        adhocLog: action.payload,
+      };
+
     default:
       return state;
   }
@@ -66,6 +78,19 @@ export const Provider = ({ children }) => {
     },
     appendToLog(payload) {
       dispatch({ type: actions.APPEND_LOG, payload: payload });
+    },
+    setAdhocLog(payload) {
+      dispatch({ type: actions.SET_ADHOC_LOG, payload: payload });
+    },
+    clearAdhocLog() {
+      dispatch({
+        type: actions.SET_ADHOC_LOG,
+        payload: {
+          downloadSpeed: null,
+          uploadSpeed: null,
+          datetime: null,
+        },
+      });
     },
   };
 

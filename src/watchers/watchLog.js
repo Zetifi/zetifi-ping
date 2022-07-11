@@ -6,8 +6,14 @@ import { Context as SettingsContext } from "../state/SettingsContext";
 import { flatten } from "flat";
 
 export default () => {
-  const { isRecording, appendToLog, startNewLog, logs } =
-    useContext(LogContext);
+  const {
+    isRecording,
+    appendToLog,
+    startNewLog,
+    logs,
+    adhocLog,
+    clearAdhocLog,
+  } = useContext(LogContext);
   const settings = useContext(SettingsContext);
   const { location } = useContext(LocationContext);
 
@@ -31,6 +37,18 @@ export default () => {
       location &&
       (log.length === 0 || ping.datetime !== log[log.length - 1].ping.datetime)
     ) {
+      let currentAdhocLog = {
+        downloadSpeed: null,
+        uploadSpeed: null,
+        datetime: null,
+      };
+
+      if (adhocLog.downloadSpeed && adhocLog.uploadSpeed && adhocLog.datetime) {
+        currentAdhocLog = {
+          ...adhocLog,
+        };
+      }
+
       appendToLog({
         ping: ping,
         location: location,
@@ -38,7 +56,12 @@ export default () => {
           ping: settings.ping,
           location: settings.location,
         },
+        adhocLog: currentAdhocLog,
       });
+
+      if (adhocLog.downloadSpeed && adhocLog.uploadSpeed && adhocLog.datetime) {
+        clearAdhocLog();
+      }
     }
   }, [isRecording, ping, location, settings.ping, settings.location]);
 

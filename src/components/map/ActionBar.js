@@ -8,14 +8,11 @@ import {
   SafeAreaView,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
-import { Context as RegionContext } from "../../state/RegionContext";
-import { Context as LocationContext } from "../../state/LocationContext";
 import { Context as SettingsContext } from "../../state/SettingsContext";
 import { Context as LogContext } from "../../state/LogContext";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { COLORS, ICON_SIZE } from "../../constants";
 import Color from "color";
+import SpeedTestInputModal from "./SpeedTestInputModal";
 
 const ActionButton = ({
   icon,
@@ -43,7 +40,17 @@ export default () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <SpeedTestInputModal visible={settings.speedTestModal.visible} />
       <View style={{ ...styles.actionBar }}>
+        {isRecording ? (
+          <ActionButton
+            icon="speed"
+            IconComponent={MaterialIcons}
+            onPress={() => {
+              settings.setSpeedTestModalVisible(true);
+            }}
+          ></ActionButton>
+        ) : null}
         <ActionButton
           IconComponent={MaterialIcons}
           icon={isRecording ? "stop" : "fiber-manual-record"}
