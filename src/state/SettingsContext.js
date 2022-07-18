@@ -12,6 +12,7 @@ const initialState = {
     interval: 1000,
     timeout: 1000,
     payloadSize: 56,
+    numberOfPings: 1,
   },
   location: {
     enableHighAccuracy: true,
@@ -142,6 +143,14 @@ const reducer = (state, action) => {
           visible: action.payload,
         },
       };
+    case actions.SET_NUMBER_OF_PINGS:
+      return {
+        ...state,
+        ping: {
+          ...state.ping,
+          numberOfPings: action.payload,
+        },
+      };
     default:
       return state;
   }
@@ -212,6 +221,12 @@ export const Provider = ({ children }) => {
         type: actions.SET_SPEED_TEST_MODAL_VISIBLE,
         payload: visible,
       });
+    },
+    setNumberOfPings: (numberOfPings) => {
+      numberOfPings = parseInt(numberOfPings);
+      if (checkWithinRange(numberOfPings, 1, 1000)) {
+        dispatch({ type: actions.SET_NUMBER_OF_PINGS, payload: numberOfPings });
+      }
     },
   };
 

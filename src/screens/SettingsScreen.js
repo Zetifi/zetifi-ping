@@ -84,6 +84,13 @@ export default () => {
             onChange={settings.setPingTimeout}
           />
           <NumericInputCell
+            title={"Number of Pings"}
+            value={settings.ping["numberOfPings"]}
+            onChange={settings.setPingNumberOfPings}
+            maxValue={1000}
+            minValue={1}
+          />
+          <NumericInputCell
             title={"Payload Size (bytes)"}
             value={settings.ping["payloadSize"]}
             onChange={settings.setPingPayloadSize}
