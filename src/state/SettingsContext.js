@@ -40,6 +40,7 @@ const actions = {
   SET_LOCATION_DISTANCE_FILTER: "SET_LOCATION_DISTANCE_FILTER",
   SET_ACTION_BAR_FOLLOW: "SET_ACTION_BAR_FOLLOW",
   SET_SPEED_TEST_MODAL_VISIBLE: "SET_SPEED_TEST_MODAL_VISIBLE",
+  SET_DEFAULT: "SET_DEFAULT",
 };
 
 const reducer = (state, action) => {
@@ -62,6 +63,10 @@ const reducer = (state, action) => {
           ...state.speedTestModal,
           ...action.payload.speedTestModal,
         },
+      };
+    case actions.SET_DEFAULT:
+      return {
+        ...initialState,
       };
     case actions.SET_PING_TIMEOUT:
       return {
@@ -163,6 +168,9 @@ export const Provider = ({ children }) => {
     ...state,
     setState(newState) {
       dispatch({ type: actions.SET, payload: newState });
+    },
+    setDefault() {
+      dispatch({ type: actions.SET_DEFAULT });
     },
     setPingHost: (host) => {
       dispatch({ type: actions.SET_PING_HOST, payload: host });

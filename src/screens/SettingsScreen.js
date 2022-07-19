@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, ScrollView, TextInput } from "react-native";
+import { StyleSheet, ScrollView, TextInput, Button, Text } from "react-native";
 import { Context as SettingsContext } from "../state/SettingsContext";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
 import NumericInput from "react-native-numeric-input";
@@ -27,11 +27,13 @@ const NumericInputCell = ({
   minValue = 10,
   step = 100,
 }) => {
+  console.log(value);
   return (
     <Cell
       title={title}
       cellAccessoryView={
         <NumericInput
+          key={value}
           step={step}
           value={value}
           onChange={onChange}
@@ -64,6 +66,7 @@ const DisabledInputCell = ({ title, value }) => {
 
 export default () => {
   const settings = useContext(SettingsContext);
+  console.log(settings.ping);
   return (
     <ScrollView style={styles.container}>
       <TableView>
@@ -124,6 +127,11 @@ export default () => {
           />
         </Section>
       </TableView>
+
+      <Button
+        title="Reset to default settings"
+        onPress={settings.setDefault}
+      ></Button>
     </ScrollView>
   );
 };
