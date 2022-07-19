@@ -27,7 +27,6 @@ const NumericInputCell = ({
   minValue = 10,
   step = 100,
 }) => {
-  console.log(value);
   return (
     <Cell
       title={title}
@@ -66,7 +65,6 @@ const DisabledInputCell = ({ title, value }) => {
 
 export default () => {
   const settings = useContext(SettingsContext);
-  console.log(settings.ping);
   return (
     <ScrollView style={styles.container}>
       <TableView>
