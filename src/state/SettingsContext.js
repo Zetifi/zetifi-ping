@@ -8,7 +8,7 @@ const checkWithinRange = (value, min, max) => {
 
 const initialState = {
   ping: {
-    host: "8.8.8.8",
+    host: "1.1.1.1",
     interval: 1000,
     timeout: 1000,
     payloadSize: 56,
@@ -183,6 +183,12 @@ export const Provider = ({ children }) => {
       payloadSize = parseInt(payloadSize);
       dispatch({ type: actions.SET_PING_PAYLOAD_SIZE, payload: payloadSize });
     },
+    setPingNumberOfPings: (numberOfPings) => {
+      numberOfPings = parseInt(numberOfPings);
+      if (checkWithinRange(numberOfPings, 1, 1000)) {
+        dispatch({ type: actions.SET_NUMBER_OF_PINGS, payload: numberOfPings });
+      }
+    },
     setLocationEnableHighAccuracy: (enableHighAccuracy) => {
       dispatch({
         type: actions.SET_LOCATION_ENABLE_HIGH_ACCURACY,
@@ -221,12 +227,6 @@ export const Provider = ({ children }) => {
         type: actions.SET_SPEED_TEST_MODAL_VISIBLE,
         payload: visible,
       });
-    },
-    setNumberOfPings: (numberOfPings) => {
-      numberOfPings = parseInt(numberOfPings);
-      if (checkWithinRange(numberOfPings, 1, 1000)) {
-        dispatch({ type: actions.SET_NUMBER_OF_PINGS, payload: numberOfPings });
-      }
     },
   };
 

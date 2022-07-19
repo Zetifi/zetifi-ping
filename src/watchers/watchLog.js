@@ -49,15 +49,19 @@ export default () => {
         };
       }
 
-      appendToLog({
-        ping: ping,
-        location: location,
-        settings: {
-          ping: settings.ping,
-          location: settings.location,
-        },
-        adhocLog: currentAdhocLog,
-      });
+      appendToLog(
+        ping.map((ping) => {
+          return {
+            ping: ping,
+            location: location,
+            settings: {
+              ping: settings.ping,
+              location: settings.location,
+            },
+            adhocLog: currentAdhocLog,
+          };
+        })
+      );
 
       if (adhocLog.downloadSpeed && adhocLog.uploadSpeed && adhocLog.datetime) {
         clearAdhocLog();

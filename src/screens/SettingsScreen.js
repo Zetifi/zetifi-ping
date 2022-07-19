@@ -89,6 +89,7 @@ export default () => {
             onChange={settings.setPingNumberOfPings}
             maxValue={1000}
             minValue={1}
+            step={1}
           />
           <NumericInputCell
             title={"Payload Size (bytes)"}

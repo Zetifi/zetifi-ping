@@ -42,7 +42,7 @@ const reducer = (state, action) => {
 
     case actions.APPEND_LOG:
       let logs = [...state.logs];
-      logs[logs.length - 1] = [...logs[logs.length - 1], action.payload];
+      logs[logs.length - 1] = [...logs[logs.length - 1], ...action.payload];
 
       return {
         ...state,
@@ -77,7 +77,9 @@ export const Provider = ({ children }) => {
       }
     },
     appendToLog(payload) {
-      dispatch({ type: actions.APPEND_LOG, payload: payload });
+      if (Array.isArray(payload)) {
+        dispatch({ type: actions.APPEND_LOG, payload: payload });
+      }
     },
     setAdhocLog(payload) {
       dispatch({ type: actions.SET_ADHOC_LOG, payload: payload });
