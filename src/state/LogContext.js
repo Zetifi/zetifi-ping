@@ -18,6 +18,7 @@ const actions = {
   APPEND_LOG: "APPEND_LOG",
   WRITE_LOG: "WRITE_LOG",
   SET_ADHOC_LOG: "SET_ADHOC_LOG",
+  SET_DEFAULT: "SET_DEFAULT",
 };
 
 const reducer = (state, action) => {
@@ -26,6 +27,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         ...action.payload,
+      };
+
+    case actions.SET_DEFAULT:
+      return {
+        ...initialState,
       };
 
     case actions.SET_IS_RECORDING:
@@ -67,6 +73,9 @@ export const Provider = ({ children }) => {
     ...state,
     setState(newState) {
       dispatch({ type: actions.SET, payload: newState });
+    },
+    setDefault() {
+      dispatch({ type: actions.SET_DEFAULT });
     },
     setIsRecording(truthy) {
       dispatch({ type: actions.SET_IS_RECORDING, payload: truthy });

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, ScrollView, TextInput, Button, Text } from "react-native";
+import { StyleSheet, ScrollView, TextInput, Button, Alert } from "react-native";
 import { Context as SettingsContext } from "../state/SettingsContext";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
 import NumericInput from "react-native-numeric-input";
@@ -128,7 +128,17 @@ export default () => {
 
       <Button
         title="Reset to default settings"
-        onPress={settings.setDefault}
+        onPress={() => {
+          Alert.alert(
+            "Are you sure?",
+            "This will reset all settings to their default values.",
+            [
+              { text: "Cancel", style: "cancel" },
+              { text: "OK", onPress: () => settings.setDefault() },
+            ],
+            { cancelable: false }
+          );
+        }}
       ></Button>
     </ScrollView>
   );

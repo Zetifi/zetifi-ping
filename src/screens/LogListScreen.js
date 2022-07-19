@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, Button, Alert } from "react-native";
 import { Context as LogContext } from "../state/LogContext";
 import { Cell, Section, TableView } from "react-native-tableview-simple";
 
 export default ({ navigation }) => {
-  const { logs } = useContext(LogContext);
+  const { logs, setDefault } = useContext(LogContext);
 
   return (
     <ScrollView style={styles.container}>
@@ -31,6 +31,22 @@ export default ({ navigation }) => {
             );
           })}
       </TableView>
+      {logs.filter((log) => log.length > 0).length > 0 && (
+        <Button
+          title="Clear logs"
+          onPress={() => {
+            Alert.alert(
+              "Are you sure?",
+              "This will clear all logs",
+              [
+                { text: "Cancel", style: "cancel" },
+                { text: "OK", onPress: () => setDefault() },
+              ],
+              { cancelable: false }
+            );
+          }}
+        ></Button>
+      )}
     </ScrollView>
   );
 };
