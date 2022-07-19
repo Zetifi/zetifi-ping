@@ -35,7 +35,8 @@ export default () => {
       isRecording &&
       ping &&
       location &&
-      (log.length === 0 || ping.datetime !== log[log.length - 1].ping.datetime)
+      (log.length === 0 ||
+        ping[0].datetime !== log[log.length - 1].ping.datetime)
     ) {
       let currentAdhocLog = {
         downloadSpeed: null,

@@ -82,9 +82,10 @@ export default () => {
             title={"Timeout (ms)"}
             value={settings.ping["timeout"]}
             onChange={settings.setPingTimeout}
+            maxValue={settings.ping["interval"]}
           />
           <NumericInputCell
-            title={"Number of Pings"}
+            title={"Simultaneous Pings"}
             value={settings.ping["numberOfPings"]}
             onChange={settings.setPingNumberOfPings}
             maxValue={1000}

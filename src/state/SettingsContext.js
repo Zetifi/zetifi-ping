@@ -176,7 +176,9 @@ export const Provider = ({ children }) => {
     setPingTimeout: (timeout) => {
       timeout = parseInt(timeout);
       if (checkWithinRange(timeout, 10, 100000)) {
-        dispatch({ type: actions.SET_PING_TIMEOUT, payload: timeout });
+        if (timeout <= state.ping.interval) {
+          dispatch({ type: actions.SET_PING_TIMEOUT, payload: timeout });
+        }
       }
     },
     setPingPayloadSize: (payloadSize) => {
