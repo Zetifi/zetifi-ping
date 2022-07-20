@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 
-import MMKVStorage from "react-native-mmkv-storage";
 import { Context as LogContext } from "../state/LogContext";
 import { Context as SettingsContext } from "../state/SettingsContext";
 
-const storage = new MMKVStorage.Loader().withEncryption().initialize();
+import storage from "../storage";
 
 export default (props) => {
   const settings = useContext(SettingsContext);
@@ -15,7 +14,7 @@ export default (props) => {
     if (restored) {
       storage.setMap("logs", {
         isRecording: logs.isRecording,
-        logs: logs.logs,
+        log: logs.log,
       });
     }
   }, [logs, restored]);

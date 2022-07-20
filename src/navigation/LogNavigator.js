@@ -11,6 +11,7 @@ import { flatten } from "flat";
 import * as FileSystem from "expo-file-system";
 import { jsonToCSV } from "react-native-csv";
 import { Share } from "react-native";
+import storage from "../storage";
 
 const onShare = async (log) => {
   const fileName = `export-${log[0].ping.datetime}.csv`;
@@ -42,7 +43,10 @@ export default () => {
               size={25}
               color={COLORS.headerTintColor}
               onPress={() => {
-                onShare(route.params.log);
+                let log = storage.getMap(route.params.logKey);
+                if (log) {
+                  onShare(log.data);
+                }
               }}
             />
           ),

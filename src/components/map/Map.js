@@ -10,7 +10,7 @@ import { useKeepAwake } from "expo-keep-awake";
 export default function Map() {
   useKeepAwake();
 
-  const { logs } = useContext(LogContext);
+  const { log } = useContext(LogContext);
   const settings = useContext(SettingsContext);
   const mapRef = React.useRef();
 
@@ -21,11 +21,7 @@ export default function Map() {
       showsUserLocation={true}
       followsUserLocation={settings.actionBar.follow}
     >
-      {logs.map((log, i) => {
-        return (
-          <LogMarkerSet key={i} log={log} latest={i === logs.length - 1} />
-        );
-      })}
+      <LogMarkerSet log={log} latest={true} />
     </MapView>
   );
 }

@@ -9,8 +9,8 @@ export default () => {
   const {
     isRecording,
     appendToLog,
-    startNewLog,
-    logs,
+    endAndStoreLog,
+    log,
     adhocLog,
     clearAdhocLog,
   } = useContext(LogContext);
@@ -24,13 +24,11 @@ export default () => {
 
   useEffect(() => {
     if (!isRecording) {
-      startNewLog();
+      endAndStoreLog();
     }
   }, [isRecording]);
 
   useEffect(() => {
-    const log = logs[logs.length - 1];
-
     if (
       isRecording &&
       ping &&

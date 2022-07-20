@@ -1,10 +1,11 @@
 import React from "react";
+import storage from "../storage";
 
 export const Context = React.createContext();
 
 const initialState = {
   isRecording: false,
-  logs: [[]],
+  log: [],
   adhocLog: {
     downloadSpeed: null,
     uploadSpeed: null,
@@ -15,8 +16,8 @@ const initialState = {
 const actions = {
   SET: "SET",
   SET_IS_RECORDING: "SET_IS_RECORDING",
-  APPEND_LOG: "APPEND_LOG",
-  WRITE_LOG: "WRITE_LOG",
+  APPEND_TO_LOG: "APPEND_TO_LOG",
+  END_AND_STORE_LOG: "END_AND_STORE_LOG",
   SET_ADHOC_LOG: "SET_ADHOC_LOG",
   SET_DEFAULT: "SET_DEFAULT",
 };
@@ -40,19 +41,16 @@ const reducer = (state, action) => {
         isRecording: action.payload,
       };
 
-    case actions.WRITE_LOG:
+    case actions.APPEND_TO_LOG:
       return {
         ...state,
-        logs: [...state.logs, action.payload],
+        log: [...state.log, ...action.payload],
       };
 
-    case actions.APPEND_LOG:
-      let logs = [...state.logs];
-      logs[logs.length - 1] = [...logs[logs.length - 1], ...action.payload];
-
+    case actions.END_AND_STORE_LOG:
       return {
         ...state,
-        logs,
+        log: [],
       };
 
     case actions.SET_ADHOC_LOG:
@@ -82,12 +80,23 @@ export const Provider = ({ children }) => {
     },
     startNewLog() {
       if (state && state.logs && state.logs[state.logs.length - 1].length > 0) {
-        dispatch({ type: actions.WRITE_LOG, payload: [] });
+        dispatch({ type: actions.WRITE_TO_LOG, payload: [] });
       }
     },
     appendToLog(payload) {
       if (Array.isArray(payload)) {
-        dispatch({ type: actions.APPEND_LOG, payload: payload });
+        dispatch({ type: actions.APPEND_TO_LOG, payload: payload });
+      }
+    },
+    endAndStoreLog() {
+      if (state && state.log.length > 0) {
+        storage.setMap(
+          `log_${state.log[0].ping.datetime}_${state.log.length}`,
+          {
+            data: state.log,
+          }
+        );
+        dispatch({ type: actions.END_AND_STORE_LOG });
       }
     },
     setAdhocLog(payload) {
