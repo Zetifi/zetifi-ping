@@ -46,7 +46,6 @@ export default () => {
                 size={25}
                 color={COLORS.headerTintColor}
                 onPress={() => {
-                  console.log(route.params);
                   let log = storage.getMap(route.params.logKey);
                   if (log) {
                     onShare(log.data);
