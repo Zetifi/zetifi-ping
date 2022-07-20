@@ -35,22 +35,27 @@ export default () => {
       <Stack.Screen
         name="Log"
         component={LogScreen}
-        options={({ route }) => ({
-          title: route.params.name,
-          headerRight: () => (
-            <EvilIcons
-              name="share-apple"
-              size={25}
-              color={COLORS.headerTintColor}
-              onPress={() => {
-                let log = storage.getMap(route.params.logKey);
-                if (log) {
-                  onShare(log.data);
-                }
-              }}
-            />
-          ),
-        })}
+        options={({ route }) => {
+          [_, logDatetime, n] = route.params.logKey.split("_");
+          logName = `${new Date(logDatetime).toLocaleString()} (n=${n})`;
+          return {
+            title: logName,
+            headerRight: () => (
+              <EvilIcons
+                name="share-apple"
+                size={25}
+                color={COLORS.headerTintColor}
+                onPress={() => {
+                  console.log(route.params);
+                  let log = storage.getMap(route.params.logKey);
+                  if (log) {
+                    onShare(log.data);
+                  }
+                }}
+              />
+            ),
+          };
+        }}
       />
     </Stack.Navigator>
   );

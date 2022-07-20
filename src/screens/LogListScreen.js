@@ -41,7 +41,6 @@ export default ({ navigation }) => {
                 onPress={() => {
                   navigation.navigate("Log", {
                     logKey: logKey,
-                    name: logName,
                   });
                 }}
                 accessory="DisclosureIndicator"
