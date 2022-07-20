@@ -33,6 +33,15 @@ export default (props) => {
     let restoredSettings = storage.getMap("settings");
 
     if (restoredLogs) {
+      if (restoredLogs.logs && restoredLogs.logs.length > 0) {
+        for (let i = 0; i < restoredLogs.logs.length; i++) {
+          let log = restoredLogs.logs[i];
+          storage.setMap(`log_${log[0].ping.datetime}_${log.length}`, {
+            data: log,
+          });
+        }
+      }
+      delete restoredLogs.logs;
       logs.setState(restoredLogs);
     }
 
