@@ -36,8 +36,8 @@ export default () => {
         name="Log"
         component={LogScreen}
         options={({ route }) => {
-          [_, logDatetime, n] = route.params.logKey.split("_");
-          logName = `${new Date(logDatetime).toLocaleString()} (n=${n})`;
+          let [_, logDatetime, n] = route.params.logKey.split("_");
+          let logName = `${new Date(logDatetime).toLocaleString()} (n=${n})`;
           return {
             title: logName,
             headerRight: () => (

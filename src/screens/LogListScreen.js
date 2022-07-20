@@ -31,8 +31,8 @@ export default ({ navigation }) => {
             return new Date(b.split("_")[1]) - new Date(a.split("_")[1]);
           })
           .map((logKey, i) => {
-            [_, logDatetime, n] = logKey.split("_");
-            logName = `${new Date(logDatetime).toLocaleString()} (n=${n})`;
+            let [_, logDatetime, n] = logKey.split("_");
+            let logName = `${new Date(logDatetime).toLocaleString()} (n=${n})`;
             return (
               <Cell
                 key={i}
