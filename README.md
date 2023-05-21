@@ -2,6 +2,15 @@
 
 This is a simple Expo (currently only supports iOS but could support Android is there is interest) app that allows you to map network performance (either LTE or WiFi) and export the results to a CSV file.
 
+<table>
+  <tr>
+    <td><img src="screenshots/not-recording-screen.png"></td>
+    <td><img src="screenshots/actively-recording-screen.png"></td>
+    <td><img src="screenshots/log-screen.png"></td>
+    <td><img src="screenshots/settings-screen.png"></td>
+  </tr>
+</table>
+
 ## Installation
 
 Clone the repo and run `yarn install` to install the dependencies.
