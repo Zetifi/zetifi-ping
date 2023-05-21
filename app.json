@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Zetifi Ping",
-    "slug": "zperf",
+    "slug": "zetifi-ping",
     "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#01053E"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zetifi.zperf"
+      "bundleIdentifier": "com.zetifi.ping"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,6 +29,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "215d655b-3ce3-4c11-a902-76c1cc5f1ccc"
+      }
     }
   }
 }
