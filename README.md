@@ -1,6 +1,6 @@
 # Zetifi Ping
 
-This is a simple Expo (currently only supports iOS but could support Android is there is interest) app that allows you to map network performance (either LTE or WiFi) and export the results to a CSV file.
+This is an Expo (currently only supports iOS but could support Android if there is interest) app that allows you to map network performance (either LTE or WiFi) and export the results to a CSV file.
 
 <table>
   <tr>
